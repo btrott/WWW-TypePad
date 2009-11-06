@@ -1,0 +1,17 @@
+NAME
+    WWW::TypePad -
+
+SYNOPSIS
+      use WWW::TypePad;
+
+DESCRIPTION
+    WWW::TypePad is
+
+AUTHOR
+    Benjamin Trott <ben@sixapart.com>
+
+LICENSE
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+SEE ALSO
