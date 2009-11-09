@@ -1,11 +1,13 @@
 NAME
-    WWW::TypePad -
+    WWW::TypePad - Client for the TypePad Platform
 
 SYNOPSIS
-      use WWW::TypePad;
+        use WWW::TypePad;
+        my $tp = WWW::TypePad->new;
 
 DESCRIPTION
-    WWW::TypePad is
+    WWW::TypePad is a Perl library implementing an interface to the TypePad
+    API platform.
 
 AUTHOR
     Benjamin Trott <ben@sixapart.com>
