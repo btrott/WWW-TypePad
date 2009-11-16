@@ -9,6 +9,7 @@ use JSON qw( decode_json );
 use LWP::UserAgent;
 use Net::OAuth::Simple;
 use WWW::TypePad::Assets;
+use WWW::TypePad::Error;
 use WWW::TypePad::Users;
 use WWW::TypePad::Util;
 
@@ -83,6 +84,11 @@ sub call {
         my $req = HTTP::Request->new( $method => $uri );
         $res = $ua->request( $req );
     }
+
+    unless ( $res->is_success ) {
+        WWW::TypePad::Error->throw( $res->code, $res->message );
+    }
+
     return decode_json( $res->content );
 }
 
