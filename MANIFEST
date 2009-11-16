@@ -14,6 +14,7 @@ inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/WWW/TypePad.pm
 lib/WWW/TypePad/Assets.pm
+lib/WWW/TypePad/Error.pm
 lib/WWW/TypePad/Users.pm
 lib/WWW/TypePad/Util.pm
 Makefile.PL
