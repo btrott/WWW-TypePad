@@ -86,7 +86,7 @@ sub call {
     }
 
     unless ( $res->is_success ) {
-        WWW::TypePad::Error->throw( $res->code, $res->message );
+        WWW::TypePad::Error::HTTP->throw( $res->code, $res->message );
     }
 
     return decode_json( $res->content );
