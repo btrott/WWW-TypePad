@@ -16,7 +16,7 @@ use WWW::TypePad::Util;
 has 'consumer_key' => ( is => 'rw' );
 has 'consumer_secret' => ( is => 'rw' );
 has 'access_token' => ( is => 'rw' );
-has 'access_secret' => ( is => 'rw' );
+has 'access_token_secret' => ( is => 'rw' );
 has 'host' => ( is => 'rw', default => 'api.typepad.com' );
 has '_oauth' => ( is => 'rw' );
 
@@ -28,10 +28,10 @@ sub oauth {
 
         $api->_oauth( Net::OAuth::Simple->new(
             tokens => {
-                consumer_key    => $api->consumer_key,
-                consumer_secret => $api->consumer_secret,
-                access_token    => $api->access_token,
-                access_secret   => $api->access_secret,
+                consumer_key          => $api->consumer_key,
+                consumer_secret       => $api->consumer_secret,
+                access_token          => $api->access_token,
+                access_token_secret   => $api->access_token_secret,
             },
             urls => {
                 authorization_url   => WWW::TypePad::Util::l( $links, 'oauth-authorization-page' ),
