@@ -26,7 +26,7 @@ sub oauth {
         my $apikey = $api->get_apikey( $api->consumer_key );
         my $links = $apikey->{owner}{links};
 
-        $api->_oauth( Net::OAuth::Simple->new(
+        $api->_oauth( Net::OAuth::Simple::AuthHeader->new(
             tokens => {
                 consumer_key          => $api->consumer_key,
                 consumer_secret       => $api->consumer_secret,
@@ -100,6 +100,49 @@ sub _call {
     }
 
     return decode_json( $res->content );
+}
+
+package Net::OAuth::Simple::AuthHeader;
+# we need Net::OAuth::Simple to make requests with the OAuth credentials
+# in an Authorization header, as required by the API, rather than the query string
+
+use base qw( Net::OAuth::Simple );
+
+sub _make_request {
+    my $self    = shift;
+
+    my $class   = shift;
+    my $url     = shift;
+    my $method  = lc(shift);
+    my %extra   = @_;
+
+    my $uri   = URI->new($url);
+    my %query = $uri->query_form;
+    $uri->query_form({});
+
+    my $request = $class->new(
+        consumer_key     => $self->consumer_key,
+        consumer_secret  => $self->consumer_secret,
+        request_url      => $uri,
+        request_method   => uc($method),
+        signature_method => $self->signature_method,
+        protocol_version => $self->oauth_1_0a ? Net::OAuth::PROTOCOL_VERSION_1_0A : Net::OAuth::PROTOCOL_VERSION_1_0,
+        timestamp        => time,
+        nonce            => $self->_nonce,
+        extra_params     => \%query,
+        %extra,
+    );
+    $request->sign;
+    die "COULDN'T VERIFY! Check OAuth parameters.\n"
+      unless $request->verify;
+
+    # divergence from the original _make_request starts here
+    my $request_url = URI->new($url);
+    my $response    = $self->{browser}->$method($request_url, 'Authorization' => $request->to_authorization_header);
+    die "$method on $request_url failed: ".$response->status_line
+      unless ( $response->is_success );
+
+    return $response;
 }
 
 1;
