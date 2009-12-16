@@ -46,7 +46,7 @@ sub oauth {
 sub get_apikey {
     my $api = shift;
     my( $key ) = @_;
-    return $api->call( GET => '/api-keys/' . $key . '.json' );
+    return $api->call_anon( GET => '/api-keys/' . $key . '.json' );
 }
 
 sub uri_for {
@@ -67,7 +67,17 @@ sub users {
 
 sub call {
     my $api = shift;
-    my( $method, $uri, $qs ) = @_;
+	return $api->_call(0, @_);
+}
+
+sub call_anon {
+	my $api = shift;
+	return $api->_call(1, @_);
+}
+
+sub _call {
+    my $api = shift;
+    my( $anon, $method, $uri, $qs ) = @_;
     unless ( $uri =~ /^http/ ) {
         $uri = $api->uri_for( $uri );
     }
@@ -76,7 +86,7 @@ sub call {
         $uri->query_form( $qs );
     }
     my $res;
-    if ( $api->access_token ) {
+    if ( $api->access_token && !$anon ) {
         $uri =~ s/^http:/https:/;
         $res = $api->oauth->make_restricted_request( $uri, $method );
     } else {
