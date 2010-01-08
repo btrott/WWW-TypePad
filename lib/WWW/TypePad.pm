@@ -73,12 +73,12 @@ sub groups {
 
 sub call {
     my $api = shift;
-	return $api->_call(0, @_);
+    return $api->_call(0, @_);
 }
 
 sub call_anon {
-	my $api = shift;
-	return $api->_call(1, @_);
+    my $api = shift;
+    return $api->_call(1, @_);
 }
 
 sub _call {
