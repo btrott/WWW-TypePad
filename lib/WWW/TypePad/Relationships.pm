@@ -1,4 +1,4 @@
-package WWW::TypePad::Assets;
+package WWW::TypePad::Relationships;
 ### BEGIN auto-generated
 ### This is an automatically generated code, do not edit!
 ### Scroll down to look for END to add additional methods
@@ -7,7 +7,7 @@ use strict;
 use Any::Moose;
 extends 'WWW::TypePad::Noun';
 
-sub prefix { '/assets' }
+sub prefix { '/relationships' }
 
 sub get {
     my $api = shift;
@@ -15,16 +15,10 @@ sub get {
     $api->_call($id);
 }
 
-sub favorites {
+sub status {
     my $api = shift;
     my $id  = shift;
-    $api->_call($id, 'favorites', undef, undef, @_);
-}
-
-sub comments {
-    my $api = shift;
-    my $id  = shift;
-    $api->_call($id, 'comments', undef, undef, @_);
+    $api->_call($id, 'status', undef, undef, );
 }
 
 

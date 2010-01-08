@@ -1,0 +1,1349 @@
+{
+   "entries" : [
+      {
+         "name" : "Application",
+         "parentType" : "Entity",
+         "properties" : [
+            {
+               "docString" : "The name of the application as provided by its developer.",
+               "name" : "name",
+               "type" : "string"
+            },
+            {
+               "docString" : "The object types for this object. This set will contain the string C<tag:api.typepad.com,2009:Application> for an application object.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "T<Deprecated> Hyperlinks for this application.",
+               "name" : "links",
+               "type" : "set<LegacyHyperlink>"
+            },
+            {
+               "docString" : "The URL of the OAuth request token endpoint for this application.",
+               "name" : "oauthRequestTokenUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL to send the user's browser to for the user authorization step.",
+               "name" : "oauthAuthorizationUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL of the OAuth access token endpoint for this application.",
+               "name" : "oauthAccessTokenUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL to send the user's browser to identify which user is logged in (the \"signin\" link).",
+               "name" : "oauthIdentificationUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL of the session sync script.",
+               "name" : "sessionSyncScriptUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL to send the user's browser to in order to sign out of TypePad.",
+               "name" : "signoutUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL of a script to embed to enable the user flyouts functionality.",
+               "name" : "userFlyoutsScriptUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the object. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            }
+         ]
+      },
+      {
+         "name" : "Asset",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "A URI that serves as a globally-unique id for the user. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL which is considered to be this asset's permalink. This might be C<null> if the asset does not have a permalink of its own (for example, if it's embedded in another asset), or if TypePad does not know its permalink.",
+               "name" : "permalinkUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that created the selected asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "The time that the asset was created, as an L<http://www.ietf.org/rfc/rfc3339.txt|RFC3339> timestamp.",
+               "name" : "published",
+               "type" : "string"
+            },
+            {
+               "docString" : "The raw asset content. The C<textFormat> property defines what format this data is in.",
+               "name" : "content",
+               "type" : "string"
+            },
+            {
+               "docString" : "A keyword which indicates what formatting mode is used for the content of this asset. This can currently be \"html\", for assets whose content is HTML, or \"text\", for assets whose content is plain text. Other formatting modes may be added in future.",
+               "name" : "textFormat",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of strings containing the id URIs of the groups that this asset is mapped into, if any. At present an asset can only be added to one group, but this may change in future.",
+               "name" : "groups",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "An object describing the site from which this asset was retrieved, for assets obtained from external feeds.",
+               "name" : "source",
+               "type" : "AssetSource"
+            },
+            {
+               "docString" : "T<Deprecated> The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page. This property has been deprecated in favor of the separate link properties defined by the subclasses of O<Asset>.",
+               "name" : "links",
+               "type" : "array<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "C<true> if this asset is a favorite for the current user, or C<false> otherwise. This property is not set for responses to anonymous requests.",
+               "name" : "isFavoriteForCurrentUser",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "The number of distinct users who have added this asset as a favorite.",
+               "name" : "favoriteCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "The number of comments that have been posted in the comment tree beneath this asset.",
+               "name" : "commentCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "Set of strings containing the HTTP methods that the currently-authenticated client is allowed to apply to this asset.",
+               "name" : "allowedMethods",
+               "type" : "set<string>"
+            }
+         ]
+      },
+      {
+         "name" : "AssetRef",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "A URI that serves as a globally-unique id for the asset. This matches the \"id\" property in the corresponding O<Asset> object.",
+               "name" : "ref",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server such as the development server; use the \"id\" property instead. This matchies the \"urlId\" propert in the corresponding asset.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL at which a representation of the corresponding asset can be retrieved.",
+               "name" : "href",
+               "type" : "string"
+            },
+            {
+               "docString" : "The MIME type of the representation at the URL given in the \"href\" property.",
+               "name" : "type",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that created the selected asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "array<string>"
+            }
+         ]
+      },
+      {
+         "name" : "AssetSource",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "T<Deprecated> C<true> if this content is considered to be created by its author, or C<false> if it's actually someone else's content imported by the asset author.",
+               "name" : "byUser",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "T<Deprecated> Hyperlinks for this source object. Contains a link whose rel is \"alternate\" and whose type is \"text/html\" which is the original permalink of an item that was imported from elsewhere.",
+               "name" : "links",
+               "type" : "set<LegacyHyperlink>"
+            },
+            {
+               "docString" : "T<Deprecated> Description of the external service provider from which this content was imported. Contains \"name\", \"icon\", and \"uri\" properties.",
+               "name" : "provider",
+               "type" : "map<string>"
+            }
+         ]
+      },
+      {
+         "name" : "Audio",
+         "parentType" : "Asset",
+         "properties" : [
+            {
+               "docString" : "A link to the actual audio stream that provides the primary content for this asset.",
+               "name" : "audioLink",
+               "type" : "AudioLink"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the user. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL which is considered to be this asset's permalink. This might be C<null> if the asset does not have a permalink of its own (for example, if it's embedded in another asset), or if TypePad does not know its permalink.",
+               "name" : "permalinkUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that created the selected asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "The time that the asset was created, as an L<http://www.ietf.org/rfc/rfc3339.txt|RFC3339> timestamp.",
+               "name" : "published",
+               "type" : "string"
+            },
+            {
+               "docString" : "The raw asset content. The C<textFormat> property defines what format this data is in.",
+               "name" : "content",
+               "type" : "string"
+            },
+            {
+               "docString" : "A keyword which indicates what formatting mode is used for the content of this asset. This can currently be \"html\", for assets whose content is HTML, or \"text\", for assets whose content is plain text. Other formatting modes may be added in future.",
+               "name" : "textFormat",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of strings containing the id URIs of the groups that this asset is mapped into, if any. At present an asset can only be added to one group, but this may change in future.",
+               "name" : "groups",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "An object describing the site from which this asset was retrieved, for assets obtained from external feeds.",
+               "name" : "source",
+               "type" : "AssetSource"
+            },
+            {
+               "docString" : "T<Deprecated> The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page. This property has been deprecated in favor of the separate link properties defined by the subclasses of O<Asset>.",
+               "name" : "links",
+               "type" : "array<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "C<true> if this asset is a favorite for the current user, or C<false> otherwise. This property is not set for responses to anonymous requests.",
+               "name" : "isFavoriteForCurrentUser",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "The number of distinct users who have added this asset as a favorite.",
+               "name" : "favoriteCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "The number of comments that have been posted in the comment tree beneath this asset.",
+               "name" : "commentCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "Set of strings containing the HTTP methods that the currently-authenticated client is allowed to apply to this asset.",
+               "name" : "allowedMethods",
+               "type" : "set<string>"
+            }
+         ]
+      },
+      {
+         "name" : "AudioLink",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "The URL for an MP3 representation of the audio stream.",
+               "name" : "url",
+               "type" : "string"
+            },
+            {
+               "docString" : "The duration of the audio stream in seconds.",
+               "name" : "duration",
+               "type" : "integer"
+            }
+         ]
+      },
+      {
+         "name" : "Base",
+         "properties" : []
+      },
+      {
+         "name" : "Blog",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "A URI that serves as a globally-unique id for the object. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The title of the blog.",
+               "name" : "title",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that owns the blog.",
+               "name" : "owner",
+               "type" : "User"
+            },
+            {
+               "docString" : "The description of the blog as provided by its owner.",
+               "name" : "description",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per object, but this may be extended in future. Clients should scan this list and ignore any types that are not recognized.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "The hyperlinks for the blog object. The \"alternate\" hyperlink of type \"text/html\" points at the blog's home page.",
+               "name" : "links",
+               "type" : "set<LegacyHyperlink>"
+            }
+         ]
+      },
+      {
+         "name" : "Comment",
+         "parentType" : "Asset",
+         "properties" : [
+            {
+               "docString" : "A reference to the asset that this comment is in reply to.",
+               "name" : "inReplyTo",
+               "type" : "AssetRef"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the user. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL which is considered to be this asset's permalink. This might be C<null> if the asset does not have a permalink of its own (for example, if it's embedded in another asset), or if TypePad does not know its permalink.",
+               "name" : "permalinkUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that created the selected asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "The time that the asset was created, as an L<http://www.ietf.org/rfc/rfc3339.txt|RFC3339> timestamp.",
+               "name" : "published",
+               "type" : "string"
+            },
+            {
+               "docString" : "The raw asset content. The C<textFormat> property defines what format this data is in.",
+               "name" : "content",
+               "type" : "string"
+            },
+            {
+               "docString" : "A keyword which indicates what formatting mode is used for the content of this asset. This can currently be \"html\", for assets whose content is HTML, or \"text\", for assets whose content is plain text. Other formatting modes may be added in future.",
+               "name" : "textFormat",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of strings containing the id URIs of the groups that this asset is mapped into, if any. At present an asset can only be added to one group, but this may change in future.",
+               "name" : "groups",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "An object describing the site from which this asset was retrieved, for assets obtained from external feeds.",
+               "name" : "source",
+               "type" : "AssetSource"
+            },
+            {
+               "docString" : "T<Deprecated> The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page. This property has been deprecated in favor of the separate link properties defined by the subclasses of O<Asset>.",
+               "name" : "links",
+               "type" : "array<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "C<true> if this asset is a favorite for the current user, or C<false> otherwise. This property is not set for responses to anonymous requests.",
+               "name" : "isFavoriteForCurrentUser",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "The number of distinct users who have added this asset as a favorite.",
+               "name" : "favoriteCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "The number of comments that have been posted in the comment tree beneath this asset.",
+               "name" : "commentCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "Set of strings containing the HTTP methods that the currently-authenticated client is allowed to apply to this asset.",
+               "name" : "allowedMethods",
+               "type" : "set<string>"
+            }
+         ]
+      },
+      {
+         "name" : "Endpoint",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "The name of the noun, as it appears in URLs.",
+               "name" : "name",
+               "type" : "string"
+            },
+            {
+               "docString" : "A mapping whose keys are the HTTP method that this endpoint accepts and whose values are docstrings describing the result of each method.",
+               "name" : "supportedMethods",
+               "type" : "map<string>"
+            },
+            {
+               "docString" : "The names of the query string arguments that this endpoint accepts.",
+               "name" : "supportedQueryArguments",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "true if this requires expects a format suffix, or false otherwise.",
+               "name" : "formatSensitive",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "For noun endpoints, an array of property endpoints that it supports.",
+               "name" : "propertyEndpoints",
+               "type" : "array<Endpoint>"
+            },
+            {
+               "docString" : "For noun endpoints, an array of action endpoints that it supports.",
+               "name" : "actionEndpoints",
+               "type" : "array<Endpoint>"
+            },
+            {
+               "docString" : "For noun endpoints, true if an id part is accepted, or false if the noun may only be used alone.",
+               "name" : "canHaveId",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "For noun endpoints, true if the id part can be ommitted, or false if it is always required.",
+               "name" : "canOmitId",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "For filter endpoints, true if a parameter is required on the filter, or false if it's a boolean filter.",
+               "name" : "parameterized",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "For endpoints that return lists, an array of filters that can be appended to the endpoint.",
+               "name" : "filterEndpoints",
+               "type" : "array<Endpoint>"
+            },
+            {
+               "docString" : "The type of object that this endpoint represents for GET, PUT and DELETE operations. This is not returned for action endpoints, since they do not represent resources.",
+               "name" : "resourceObjectType",
+               "type" : "ObjectType"
+            },
+            {
+               "docString" : "The type of object that this endpoint accepts for POST operations.",
+               "name" : "postObjectType",
+               "type" : "ObjectType"
+            },
+            {
+               "docString" : "For action endpoints, the type of object that this endpoint returns on success. If the endpoint returns no payload on success, this property is null.",
+               "name" : "responseObjectType",
+               "type" : "ObjectType"
+            }
+         ]
+      },
+      {
+         "name" : "Entity",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "A URI that serves as a globally-unique id for the object. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            }
+         ]
+      },
+      {
+         "name" : "Event",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "A URI that serves as a globally-unique id for the user. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page.",
+               "name" : "links",
+               "type" : "set<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of verb identifier URIs. At the present time, only one verb is returned, but this may be extended in future. Clients should scan this list and ignore any verbs that are not recognised. This list also includes appropriate verb URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "verbs",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "The user that did the action that the event describes.",
+               "name" : "actor",
+               "type" : "User"
+            },
+            {
+               "docString" : "The object that the action was done to.",
+               "name" : "object",
+               "type" : "Base"
+            }
+         ]
+      },
+      {
+         "name" : "Favorite",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "A URI that serves as a globally-unique id for the favorite. This can be used to recognise where the same favorite is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this favorite in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server such as the development server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The owner of this favorite. This is the user that marked the asset as a favorite, not the owner of the target asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "A reference to the asset that has been marked as a favorite.",
+               "name" : "inReplyTo",
+               "type" : "AssetRef"
+            },
+            {
+               "docString" : "The time that the favorite was created, as an RFC3339 timestamp.",
+               "name" : "published",
+               "type" : "string"
+            }
+         ]
+      },
+      {
+         "name" : "Group",
+         "parentType" : "Entity",
+         "properties" : [
+            {
+               "docString" : "The display name set by the group's owner.",
+               "name" : "displayName",
+               "type" : "string"
+            },
+            {
+               "docString" : "A tagline describing the group, set by the group's owner.",
+               "name" : "tagline",
+               "type" : "string"
+            },
+            {
+               "docString" : "The hyperlinks for the group object.",
+               "name" : "links",
+               "type" : "set<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of object type identifier URIs.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the object. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            }
+         ]
+      },
+      {
+         "name" : "ImageLink",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "The URL for the original (full-size) version of this image.",
+               "name" : "url",
+               "type" : "string"
+            },
+            {
+               "docString" : "If TypePad is able to provide a scaled version of this image, a URL template which uses the placeholder C<{spec}> to represent where to place a sizing spec as described above. C<null> if TypePad is unable to provide a scaled version of this image, for example if the image is not actually hosted on TypePad itself.",
+               "name" : "urlTemplate",
+               "type" : "string"
+            },
+            {
+               "docString" : "The width of the original image in pixels.",
+               "name" : "width",
+               "type" : "integer"
+            },
+            {
+               "docString" : "The height of the original image in pixels.",
+               "name" : "height",
+               "type" : "integer"
+            }
+         ]
+      },
+      {
+         "name" : "LegacyHyperlink",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "T<Deprecated> A keyword representing the relationship type of the hyperlink.",
+               "name" : "rel",
+               "type" : "string"
+            },
+            {
+               "docString" : "T<Deprecated> The MIME media type of the target resource.",
+               "name" : "type",
+               "type" : "string"
+            },
+            {
+               "docString" : "T<Deprecated> The absolute URL of the target resource.",
+               "name" : "href",
+               "type" : "string"
+            },
+            {
+               "docString" : "T<Deprecated> The HTML embed code for this media link.",
+               "name" : "html",
+               "type" : "string"
+            },
+            {
+               "docString" : "T<Deprecated> Where the link is to a visual media item (a photo, for example), the width of the item in pixels.",
+               "name" : "width",
+               "type" : "integer"
+            },
+            {
+               "docString" : "T<Deprecated> Where the link is to a visual media item (a photo, for example), the height of the item in pixels.",
+               "name" : "height",
+               "type" : "integer"
+            },
+            {
+               "docString" : "T<Deprecated> Where the link is to a list resource, the total number of items in that list. This is provided in some cases to avoid the need to retrieve the resource and inspect its \"totalResults\" property directly.",
+               "name" : "total",
+               "type" : "integer"
+            },
+            {
+               "docString" : "T<Deprecated> If present, gives a list of methods that the currently-authenticated user is allowed to perform on this resource. The empty array indicates that no methods are allowed. If the allowedMethods property is absent, this indicates that the server is unable to determine the allowed methods and so the client should issue an OPTIONS or GET request on the resource to determine what methods are allowed.",
+               "name" : "allowedMethods",
+               "type" : "array<string>"
+            }
+         ]
+      },
+      {
+         "name" : "Link",
+         "parentType" : "Asset",
+         "properties" : [
+            {
+               "docString" : "The URL that is the target of this link.",
+               "name" : "targetUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the user. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL which is considered to be this asset's permalink. This might be C<null> if the asset does not have a permalink of its own (for example, if it's embedded in another asset), or if TypePad does not know its permalink.",
+               "name" : "permalinkUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that created the selected asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "The time that the asset was created, as an L<http://www.ietf.org/rfc/rfc3339.txt|RFC3339> timestamp.",
+               "name" : "published",
+               "type" : "string"
+            },
+            {
+               "docString" : "The raw asset content. The C<textFormat> property defines what format this data is in.",
+               "name" : "content",
+               "type" : "string"
+            },
+            {
+               "docString" : "A keyword which indicates what formatting mode is used for the content of this asset. This can currently be \"html\", for assets whose content is HTML, or \"text\", for assets whose content is plain text. Other formatting modes may be added in future.",
+               "name" : "textFormat",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of strings containing the id URIs of the groups that this asset is mapped into, if any. At present an asset can only be added to one group, but this may change in future.",
+               "name" : "groups",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "An object describing the site from which this asset was retrieved, for assets obtained from external feeds.",
+               "name" : "source",
+               "type" : "AssetSource"
+            },
+            {
+               "docString" : "T<Deprecated> The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page. This property has been deprecated in favor of the separate link properties defined by the subclasses of O<Asset>.",
+               "name" : "links",
+               "type" : "array<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "C<true> if this asset is a favorite for the current user, or C<false> otherwise. This property is not set for responses to anonymous requests.",
+               "name" : "isFavoriteForCurrentUser",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "The number of distinct users who have added this asset as a favorite.",
+               "name" : "favoriteCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "The number of comments that have been posted in the comment tree beneath this asset.",
+               "name" : "commentCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "Set of strings containing the HTTP methods that the currently-authenticated client is allowed to apply to this asset.",
+               "name" : "allowedMethods",
+               "type" : "set<string>"
+            }
+         ]
+      },
+      {
+         "name" : "MobileProfile",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "A private email address for posting via email",
+               "name" : "emailAddress",
+               "type" : "string"
+            }
+         ]
+      },
+      {
+         "name" : "ObjectProperty",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "The name of the property.",
+               "name" : "name",
+               "type" : "string"
+            },
+            {
+               "docString" : "The name of the type of this property.",
+               "name" : "type",
+               "type" : "string"
+            },
+            {
+               "docString" : "A human-readable documentation string for this property.",
+               "name" : "docString",
+               "type" : "string"
+            }
+         ]
+      },
+      {
+         "name" : "ObjectType",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "The name of the type. Absent if this is an anonymous type representing the request or response of an action endpoint.",
+               "name" : "name",
+               "type" : "string"
+            },
+            {
+               "docString" : "The name of the parent type, if any.",
+               "name" : "parentType",
+               "type" : "string"
+            },
+            {
+               "docString" : "The properties of this type.",
+               "name" : "properties",
+               "type" : "array<ObjectProperty>"
+            }
+         ]
+      },
+      {
+         "name" : "Page",
+         "parentType" : "Asset",
+         "properties" : [
+            {
+               "docString" : "A list of links to the images that are embedded within the content of this page.",
+               "name" : "embeddedImageLinks",
+               "type" : "array<ImageLink>"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the user. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL which is considered to be this asset's permalink. This might be C<null> if the asset does not have a permalink of its own (for example, if it's embedded in another asset), or if TypePad does not know its permalink.",
+               "name" : "permalinkUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that created the selected asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "The time that the asset was created, as an L<http://www.ietf.org/rfc/rfc3339.txt|RFC3339> timestamp.",
+               "name" : "published",
+               "type" : "string"
+            },
+            {
+               "docString" : "The raw asset content. The C<textFormat> property defines what format this data is in.",
+               "name" : "content",
+               "type" : "string"
+            },
+            {
+               "docString" : "A keyword which indicates what formatting mode is used for the content of this asset. This can currently be \"html\", for assets whose content is HTML, or \"text\", for assets whose content is plain text. Other formatting modes may be added in future.",
+               "name" : "textFormat",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of strings containing the id URIs of the groups that this asset is mapped into, if any. At present an asset can only be added to one group, but this may change in future.",
+               "name" : "groups",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "An object describing the site from which this asset was retrieved, for assets obtained from external feeds.",
+               "name" : "source",
+               "type" : "AssetSource"
+            },
+            {
+               "docString" : "T<Deprecated> The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page. This property has been deprecated in favor of the separate link properties defined by the subclasses of O<Asset>.",
+               "name" : "links",
+               "type" : "array<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "C<true> if this asset is a favorite for the current user, or C<false> otherwise. This property is not set for responses to anonymous requests.",
+               "name" : "isFavoriteForCurrentUser",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "The number of distinct users who have added this asset as a favorite.",
+               "name" : "favoriteCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "The number of comments that have been posted in the comment tree beneath this asset.",
+               "name" : "commentCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "Set of strings containing the HTTP methods that the currently-authenticated client is allowed to apply to this asset.",
+               "name" : "allowedMethods",
+               "type" : "set<string>"
+            }
+         ]
+      },
+      {
+         "name" : "Photo",
+         "parentType" : "Asset",
+         "properties" : [
+            {
+               "docString" : "A link to the image that this Photo asset represents.",
+               "name" : "imageLink",
+               "type" : "ImageLink"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the user. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL which is considered to be this asset's permalink. This might be C<null> if the asset does not have a permalink of its own (for example, if it's embedded in another asset), or if TypePad does not know its permalink.",
+               "name" : "permalinkUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that created the selected asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "The time that the asset was created, as an L<http://www.ietf.org/rfc/rfc3339.txt|RFC3339> timestamp.",
+               "name" : "published",
+               "type" : "string"
+            },
+            {
+               "docString" : "The raw asset content. The C<textFormat> property defines what format this data is in.",
+               "name" : "content",
+               "type" : "string"
+            },
+            {
+               "docString" : "A keyword which indicates what formatting mode is used for the content of this asset. This can currently be \"html\", for assets whose content is HTML, or \"text\", for assets whose content is plain text. Other formatting modes may be added in future.",
+               "name" : "textFormat",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of strings containing the id URIs of the groups that this asset is mapped into, if any. At present an asset can only be added to one group, but this may change in future.",
+               "name" : "groups",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "An object describing the site from which this asset was retrieved, for assets obtained from external feeds.",
+               "name" : "source",
+               "type" : "AssetSource"
+            },
+            {
+               "docString" : "T<Deprecated> The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page. This property has been deprecated in favor of the separate link properties defined by the subclasses of O<Asset>.",
+               "name" : "links",
+               "type" : "array<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "C<true> if this asset is a favorite for the current user, or C<false> otherwise. This property is not set for responses to anonymous requests.",
+               "name" : "isFavoriteForCurrentUser",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "The number of distinct users who have added this asset as a favorite.",
+               "name" : "favoriteCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "The number of comments that have been posted in the comment tree beneath this asset.",
+               "name" : "commentCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "Set of strings containing the HTTP methods that the currently-authenticated client is allowed to apply to this asset.",
+               "name" : "allowedMethods",
+               "type" : "set<string>"
+            }
+         ]
+      },
+      {
+         "name" : "Post",
+         "parentType" : "Asset",
+         "properties" : [
+            {
+               "docString" : "A list of links to the images that are embedded within the content of this post.",
+               "name" : "embeddedImageLinks",
+               "type" : "array<ImageLink>"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the user. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL which is considered to be this asset's permalink. This might be C<null> if the asset does not have a permalink of its own (for example, if it's embedded in another asset), or if TypePad does not know its permalink.",
+               "name" : "permalinkUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that created the selected asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "The time that the asset was created, as an L<http://www.ietf.org/rfc/rfc3339.txt|RFC3339> timestamp.",
+               "name" : "published",
+               "type" : "string"
+            },
+            {
+               "docString" : "The raw asset content. The C<textFormat> property defines what format this data is in.",
+               "name" : "content",
+               "type" : "string"
+            },
+            {
+               "docString" : "A keyword which indicates what formatting mode is used for the content of this asset. This can currently be \"html\", for assets whose content is HTML, or \"text\", for assets whose content is plain text. Other formatting modes may be added in future.",
+               "name" : "textFormat",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of strings containing the id URIs of the groups that this asset is mapped into, if any. At present an asset can only be added to one group, but this may change in future.",
+               "name" : "groups",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "An object describing the site from which this asset was retrieved, for assets obtained from external feeds.",
+               "name" : "source",
+               "type" : "AssetSource"
+            },
+            {
+               "docString" : "T<Deprecated> The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page. This property has been deprecated in favor of the separate link properties defined by the subclasses of O<Asset>.",
+               "name" : "links",
+               "type" : "array<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "C<true> if this asset is a favorite for the current user, or C<false> otherwise. This property is not set for responses to anonymous requests.",
+               "name" : "isFavoriteForCurrentUser",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "The number of distinct users who have added this asset as a favorite.",
+               "name" : "favoriteCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "The number of comments that have been posted in the comment tree beneath this asset.",
+               "name" : "commentCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "Set of strings containing the HTTP methods that the currently-authenticated client is allowed to apply to this asset.",
+               "name" : "allowedMethods",
+               "type" : "set<string>"
+            }
+         ]
+      },
+      {
+         "name" : "Relationship",
+         "properties" : [
+            {
+               "docString" : "The source entity, the 'subject' of the relationship.",
+               "name" : "source",
+               "type" : "Entity"
+            },
+            {
+               "docString" : "The target entity, the 'object' of the relationship.",
+               "name" : "target",
+               "type" : "Entity"
+            },
+            {
+               "docString" : "A RelationshipStatus object describing the types of relationship that currently exist between the source and the target.",
+               "name" : "status",
+               "type" : "RelationshipStatus"
+            },
+            {
+               "docString" : "The hyperlinks for the relationship object.",
+               "name" : "links",
+               "type" : "set<LegacyHyperlink>"
+            }
+         ]
+      },
+      {
+         "name" : "RelationshipStatus",
+         "properties" : []
+      },
+      {
+         "name" : "User",
+         "parentType" : "Entity",
+         "properties" : [
+            {
+               "docString" : "The user's chosen display name.",
+               "name" : "displayName",
+               "type" : "string"
+            },
+            {
+               "docString" : "T<Deprecated> The location of the user, as a free-form string provided by the user. This property will go away in future, since it has moved to the O<UserProfile> object type, which can be retrieved from N</users/{id}/profile>.",
+               "name" : "location",
+               "type" : "string"
+            },
+            {
+               "docString" : "T<Deprecated> A list of interests provided by the user and displayed on the user's profile page. This property will go away in future, since it has moved to the O<UserProfile> object type, which can be retrieved from N</users/{id}/profile>.",
+               "name" : "interests",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "The name the user has chosen for use in his TypePad Profile URL. This can be used as the id in the URL to select this user, though it must not be used as a persistent key since it can be changed by the user at any time.",
+               "name" : "preferredUsername",
+               "type" : "string"
+            },
+            {
+               "docString" : "T<Deprecated> The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page. This is deprecated in favor of the individual link properties such as C<avatarLink> and C<profilePageUrl>.",
+               "name" : "links",
+               "type" : "set<LegacyHyperlink>"
+            },
+            {
+               "docString" : "Link to this user's avatar (userpic) image.",
+               "name" : "avatarLink",
+               "type" : "ImageLink"
+            },
+            {
+               "docString" : "URL of the user's profile page.",
+               "name" : "profilePageUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "Set of strings containing the HTTP methods that the currently-authenticated client is allowed to apply to this user.",
+               "name" : "allowedMethods",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the object. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            }
+         ]
+      },
+      {
+         "name" : "UserProfile",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "The user's chosen display name.",
+               "name" : "displayName",
+               "type" : "string"
+            },
+            {
+               "docString" : "The location of the user, as a free-form string provided by the user.",
+               "name" : "location",
+               "type" : "string"
+            },
+            {
+               "docString" : "A list of interests provided by the user and displayed on the user's profile page.",
+               "name" : "interests",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "The name the user has chosen for use in his TypePad Profile URL. This can be used as the id in the URL to select this user, though it must not be used as a persistent key since it can be changed by the user at any time.",
+               "name" : "preferredUsername",
+               "type" : "string"
+            },
+            {
+               "docString" : "Link to this user's avatar (userpic) image.",
+               "name" : "avatarLink",
+               "type" : "ImageLink"
+            },
+            {
+               "docString" : "URL of the user's profile page.",
+               "name" : "profilePageUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "URL of a page which can be rendered in an iframe to produce a widget through which the remote user can follow this user. Should be rendered in an iframe that's 300 pixels wide and 125 pixels high.",
+               "name" : "followFrameContentUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "URL of a page at which this user can edit the profile information attached to the user account. This is present only if the remote user has access to do this.",
+               "name" : "profileEditPageUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "URL of a page at which this user can manage group memberships. This is present only if the remote user has access to do this.",
+               "name" : "membershipManagementPageUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "URL that the user has specified as an external website URL. C<null> if the user has not provided a website URL.",
+               "name" : "homepageUrl",
+               "type" : "string"
+            }
+         ]
+      },
+      {
+         "name" : "Video",
+         "parentType" : "Asset",
+         "properties" : [
+            {
+               "docString" : "A link to the actual video that provides the primary content for this asset.",
+               "name" : "videoLink",
+               "type" : "VideoLink"
+            },
+            {
+               "docString" : "A link to an image which serves as a preview or poster frame for this video. Might be C<null> if such an image is not available.",
+               "name" : "previewImageLink",
+               "type" : "ImageLink"
+            },
+            {
+               "docString" : "A URI that serves as a globally-unique id for the user. This can be used to recognise where the same user is returned in response to different requests, and as a mapping key for an application's local data store.",
+               "name" : "id",
+               "type" : "string"
+            },
+            {
+               "docString" : "A string containing the canonical identifier that can be used as the \"id\" for this object in URLs. However, this should not be used as a database key to avoid collisions when an application is switched to a different backend server; use the \"id\" property instead.",
+               "name" : "urlId",
+               "type" : "string"
+            },
+            {
+               "docString" : "The URL which is considered to be this asset's permalink. This might be C<null> if the asset does not have a permalink of its own (for example, if it's embedded in another asset), or if TypePad does not know its permalink.",
+               "name" : "permalinkUrl",
+               "type" : "string"
+            },
+            {
+               "docString" : "The user that created the selected asset.",
+               "name" : "author",
+               "type" : "User"
+            },
+            {
+               "docString" : "The time that the asset was created, as an L<http://www.ietf.org/rfc/rfc3339.txt|RFC3339> timestamp.",
+               "name" : "published",
+               "type" : "string"
+            },
+            {
+               "docString" : "The raw asset content. The C<textFormat> property defines what format this data is in.",
+               "name" : "content",
+               "type" : "string"
+            },
+            {
+               "docString" : "A keyword which indicates what formatting mode is used for the content of this asset. This can currently be \"html\", for assets whose content is HTML, or \"text\", for assets whose content is plain text. Other formatting modes may be added in future.",
+               "name" : "textFormat",
+               "type" : "string"
+            },
+            {
+               "docString" : "An array of strings containing the id URIs of the groups that this asset is mapped into, if any. At present an asset can only be added to one group, but this may change in future.",
+               "name" : "groups",
+               "type" : "array<string>"
+            },
+            {
+               "docString" : "An object describing the site from which this asset was retrieved, for assets obtained from external feeds.",
+               "name" : "source",
+               "type" : "AssetSource"
+            },
+            {
+               "docString" : "T<Deprecated> The hyperlinks for the user object. The \"alternate\" hyperlink of type \"text/html\" points at the user's TypePad profile page. This property has been deprecated in favor of the separate link properties defined by the subclasses of O<Asset>.",
+               "name" : "links",
+               "type" : "array<LegacyHyperlink>"
+            },
+            {
+               "docString" : "An array of object type identifier URIs. At the present time, only one object type is returned per asset, but this may be extended in future. Clients should scan this list and ignore any types that are not recognised. This list also includes appropriate type URIs as defined by the ActivityStrea.ms schema specification.",
+               "name" : "objectTypes",
+               "type" : "set<string>"
+            },
+            {
+               "docString" : "C<true> if this asset is a favorite for the current user, or C<false> otherwise. This property is not set for responses to anonymous requests.",
+               "name" : "isFavoriteForCurrentUser",
+               "type" : "boolean"
+            },
+            {
+               "docString" : "The number of distinct users who have added this asset as a favorite.",
+               "name" : "favoriteCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "The number of comments that have been posted in the comment tree beneath this asset.",
+               "name" : "commentCount",
+               "type" : "integer"
+            },
+            {
+               "docString" : "Set of strings containing the HTTP methods that the currently-authenticated client is allowed to apply to this asset.",
+               "name" : "allowedMethods",
+               "type" : "set<string>"
+            }
+         ]
+      },
+      {
+         "name" : "VideoLink",
+         "parentType" : "Base",
+         "properties" : [
+            {
+               "docString" : "An opaque HTML fragment which, when embedded in a HTML page, will provide an inline player for the video.",
+               "name" : "embedCode",
+               "type" : "string"
+            }
+         ]
+      }
+   ],
+   "totalResults" : 29
+}
