@@ -11,6 +11,7 @@ use Net::OAuth::Simple;
 use WWW::TypePad::Assets;
 use WWW::TypePad::Error;
 use WWW::TypePad::Users;
+use WWW::TypePad::Groups;
 use WWW::TypePad::Util;
 
 has 'consumer_key' => ( is => 'rw' );
@@ -63,6 +64,11 @@ sub assets {
 sub users {
     my $api = shift;
     return WWW::TypePad::Users->new( { base => $api } );
+}
+
+sub groups {
+    my $api = shift;
+    return WWW::TypePad::Groups->new( { base => $api } );
 }
 
 sub call {
