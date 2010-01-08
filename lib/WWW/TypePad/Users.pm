@@ -53,4 +53,9 @@ sub notifications {
     $api->_call($id, 'notifications', undef, undef, @_);
 }
 
+# aliases
+
+sub followers { shift->follower_relationships(@_) }
+sub following { shift->following_relationships(@_) }
+
 1;
