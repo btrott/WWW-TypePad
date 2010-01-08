@@ -2,23 +2,20 @@ package WWW::TypePad::Groups;
 use strict;
 
 use Any::Moose;
+extends 'WWW::TypePad::Noun';
 
-has 'base' => ( is => 'rw', isa => 'WWW::TypePad' );
-
-sub events {
-    my $api = shift;
-    my( $group_id ) = @_;
-    return $api->base->call(
-        GET => '/groups/' . $group_id . '/events.json'
-    );
-}
+sub prefix { '/groups' }
 
 sub get {
     my $api = shift;
-    my( $group_id ) = @_;
-    return $api->base->call(
-        GET => '/groups/' . $group_id . '.json'
-    );
+    my $id  = shift;
+    $api->_call($id);
+}
+
+sub events {
+    my $api = shift;
+    my $id  = shift;
+    $api->_call($id, 'events', undef, undef, @_);
 }
 
 1;

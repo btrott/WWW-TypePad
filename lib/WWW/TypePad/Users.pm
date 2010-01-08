@@ -1,72 +1,56 @@
 package WWW::TypePad::Users;
 use strict;
-
 use Any::Moose;
+extends 'WWW::TypePad::Noun';
 
-has 'base' => ( is => 'rw', isa => 'WWW::TypePad' );
+sub prefix { '/users' }
 
 sub elsewhere_accounts {
     my $api = shift;
-    my( $user_id ) = @_;
-    return $api->base->call(
-        GET => '/users/' . $user_id . '/elsewhere-accounts.json'
-    );
+    my $id  = shift;
+    $api->_call($id, 'elsewhere-accounts', undef, undef, @_);
 }
 
 sub events {
     my $api = shift;
-    my( $user_id ) = @_;
-    return $api->base->call(
-        GET => '/users/' . $user_id . '/events.json'
-    );
+    my $id  = shift;
+    $api->_call($id, 'events', undef, undef, @_);
 }
 
 sub favorites {
     my $api = shift;
-    my( $user_id ) = @_;
-    return $api->base->call(
-        GET => '/users/' . $user_id . '/favorites.json'
-    );
+    my $id  = shift;
+    $api->_call($id, 'favorites', undef, undef, @_);
 }
 
-sub followers {
+sub follower_relationships {
     my $api = shift;
-    my( $user_id, $qs ) = @_;
-    return $api->base->call(
-        GET => '/users/' . $user_id . '/relationships/@follower.json' => $qs
-    );
+    my $id  = shift;
+    $api->_call($id, 'relationships', 'follower', undef, @_);
 }
 
-sub following {
+sub following_relationships {
     my $api = shift;
-    my( $user_id, $qs ) = @_;
-    return $api->base->call(
-        GET => '/users/' . $user_id . '/relationships/@following.json' => $qs
-    );
+    my $id  = shift;
+    $api->_call($id, 'relationships', 'following', undef, @_);
 }
 
 sub get {
     my $api = shift;
-    my( $user_id ) = @_;
-    return $api->base->call(
-        GET => '/users/' . $user_id . '.json'
-    );
+    my $id  = shift;
+    $api->_call($id);
 }
 
 sub memberships {
     my $api = shift;
-    my( $user_id, $qs ) = @_;
-    return $api->base->call(
-        GET => '/users/' . $user_id . '/memberships.json' => $qs
-    );
+    my $id  = shift;
+    $api->_call($id, 'memberships', undef, undef, @_);
 }
 
 sub notifications {
     my $api = shift;
-    my( $user_id, $qs ) = @_;
-    return $api->base->call(
-        GET => '/users/' . $user_id . '/notifications.json' => $qs
-    );
+    my $id  = shift;
+    $api->_call($id, 'notifications', undef, undef, @_);
 }
 
 1;

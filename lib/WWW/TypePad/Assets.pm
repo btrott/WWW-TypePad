@@ -2,31 +2,26 @@ package WWW::TypePad::Assets;
 use strict;
 
 use Any::Moose;
+extends 'WWW::TypePad::Noun';
 
-has 'base' => ( is => 'rw', isa => 'WWW::TypePad' );
+sub prefix { '/assets' }
 
 sub get {
     my $api = shift;
-    my( $asset_id ) = @_;
-    return $api->base->call(
-        GET => '/assets/' . $asset_id . '.json'
-    );
+    my $id  = shift;
+    return $api->_call($id);
 }
 
 sub comments {
     my $api = shift;
-    my( $asset_id ) = @_;
-    return $api->base->call(
-        GET => '/assets/' . $asset_id . '/comments.json'
-    );
+    my $id  = shift;
+    $api->_call($id, 'comments', undef, undef, @_);
 }
 
 sub favorites {
     my $api = shift;
-    my( $asset_id ) = @_;
-    return $api->base->call(
-        GET => '/assets/' . $asset_id . '/favorites.json'
-    );
+    my $id  = shift;
+    $api->_call($id, 'favorites', undef, undef, @_);
 }
 
 1;
