@@ -114,39 +114,61 @@ package Net::OAuth::Simple::AuthHeader;
 
 use base qw( Net::OAuth::Simple );
 
-sub _make_request {
-    my $self    = shift;
+sub new {
+    my $class = shift;
+    my $self = $class->SUPER::new( @_ );
+    $self->{browser}->max_redirect( 0 );
+    return $self;
+}
 
-    my $class   = shift;
-    my $url     = shift;
-    my $method  = lc(shift);
-    my %extra   = @_;
+sub make_restricted_request {
+    my $self = shift;
+    croak $Net::OAuth::Simple::UNAUTHORIZED unless $self->authorized;
 
-    my $uri   = URI->new($url);
+    my( $url, $method, %extras ) = @_;
+
+    my $uri = URI->new( $url );
     my %query = $uri->query_form;
-    $uri->query_form({});
+    $uri->query_form( {} );
 
-    my $request = $class->new(
+    $method = lc $method;
+
+    my $request = Net::OAuth::ProtectedResourceRequest->new(
         consumer_key     => $self->consumer_key,
         consumer_secret  => $self->consumer_secret,
         request_url      => $uri,
-        request_method   => uc($method),
+        request_method   => uc( $method ),
         signature_method => $self->signature_method,
-        protocol_version => $self->oauth_1_0a ? Net::OAuth::PROTOCOL_VERSION_1_0A : Net::OAuth::PROTOCOL_VERSION_1_0,
+        protocol_version => $self->oauth_1_0a ?
+            Net::OAuth::PROTOCOL_VERSION_1_0A :
+            Net::OAuth::PROTOCOL_VERSION_1_0,
         timestamp        => time,
         nonce            => $self->_nonce,
         extra_params     => \%query,
-        %extra,
+        token            => $self->access_token,
+        token_secret     => $self->access_token_secret,
+        extra_params     => \%extras,
     );
     $request->sign;
     die "COULDN'T VERIFY! Check OAuth parameters.\n"
-      unless $request->verify;
+        unless $request->verify;
 
-    # divergence from the original _make_request starts here
-    my $request_url = URI->new($url);
-    my $response    = $self->{browser}->$method($request_url, 'Authorization' => $request->to_authorization_header);
-    die "$method on $request_url failed: ".$response->status_line
-      unless ( $response->is_success );
+    my $request_url = URI->new( $url );
+    my $response = $self->{browser}->$method(
+        $request_url, 'Authorization' => $request->to_authorization_header
+    );
+
+    if ( $response->is_redirect ) {
+        my $referral_uri = $response->header( 'Location' );
+        return $self->make_restricted_request(
+            $referral_uri,
+            $method,
+            %extras,
+        );
+    }
+
+    die "$method on $request_url failed: " . $response->status_line
+        unless $response->is_success;
 
     return $response;
 }
